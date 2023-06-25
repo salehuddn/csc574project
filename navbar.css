@@ -1,7 +1,7 @@
 
 .navbar {
   background-color: #2B2B2B;
-  padding: 10px;
+  padding: 10px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,7 +17,7 @@
 }
 
 .navbar-brand .logo img {
-  max-height: 30px;
+  max-height: 40px;
   width: auto;
 }
 
@@ -72,4 +72,45 @@
   color: #333;
 }
 
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .navbar-nav {
+    display: none; /* Hide the navbar items by default */
+  }
+
+  .navbar-collapse {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-collapse.show {
+    display: block;
+  }
+
+  .navbar-toggler {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .navbar-toggler span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .search-container {
+    display: none; /* Hide the search container by default */
+    margin-top: 10px;
+  }
+
+  .navbar-collapse.show .search-container {
+    display: block; /* Show the search container when the navbar is toggled */
+  }
+}
 
