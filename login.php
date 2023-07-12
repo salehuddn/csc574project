@@ -4,24 +4,36 @@
   
   $email = $password = $name = '';
 
+  if (isset($_SESSION['registerMessage'])) {
+    $registerMessage = $_SESSION['registerMessage'];
+
+    //unset the register message in the session
+    unset($_SESSION['registerMessage']);
+
+    //display the register message as alert
+    echo '<script>window.alert("' . $registerMessage . '");</script>';
+  }
+
   if (isset($_POST['login'])) {
     $email = $_POST['userEmail'];
     $password = $_POST['userPassword'];
 
-    $query = "SELECT id, password FROM users WHERE email = '$email'";
+    $query = "SELECT id, password, role FROM users WHERE email = '$email'";
     $result = mysqli_query($connection, $query);
 
     if ($result && mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
         $userId = $row['id'];
         $hashedPassword = $row['password'];
+        $role = $row['role'];
 
         //verify password
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['loggedIn'] = true;
             $_SESSION['userId'] = $userId; //store the user's ID in the session
-
+            $_SESSION['role'] = $role;
             $_SESSION['loginMessage'] = "Logged in successfully.";
+
             header('Location: index.php');
             exit();
         } else {

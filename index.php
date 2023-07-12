@@ -1,6 +1,5 @@
 <?php 
   require_once 'config/connection.php';
-
   session_start();
 
   if (isset($_GET['registration']) && $_GET['registration'] === 'success') {
@@ -66,7 +65,7 @@
           </div>
         </div>
       </div>
-
+      
       <!-- Hot Selling Items -->
       <div class="row my-4">
         <h2>Hot Selling</h2>

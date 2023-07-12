@@ -1,26 +1,24 @@
 <?php 
   require_once 'config/connection.php';
+  session_start();
 
-  // Handle register form submission
   if (isset($_POST['register'])) {
     $name = $_POST['userName'];
     $email = $_POST['userEmail'];
     $password = $_POST['userPassword'];
     
-    // Hash the password
+    //hash password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // Perform a database query to insert the new user
-    $query = "INSERT INTO Users (name, email, password) VALUES ('$name', '$email', '$hashedPassword')";
+    //insert the new user
+    $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashedPassword')";
     $result = mysqli_query($connection, $query);
 
     if ($result) {
-      // Registration successful, log in the user
-      // Store the user's email in a session variable
       $_SESSION['userEmail'] = $email;
+      $_SESSION['registerMessage'] = "Registration successful! You can now log in.";
 
-      // Redirect to the login page with a success message
-      header('Location: index.php?registration=success');
+      header('Location: login.php');
       exit();
     } else {
         $registerError = "Error registering user.";
@@ -38,6 +36,14 @@
   <title>GracefulGlam | Register</title>
 
   <?php @include('layouts/header.php') ?>
+
+  <style>
+    .required-field::after {
+      content: " *";
+      color: red;
+      display: inline;
+    }
+  </style>
 </head>
 
 <body>
@@ -60,15 +66,15 @@
                 <?php endif; ?>
 
                 <div class="mb-3">
-                  <label for="name" class="form-label">Name: </label>
+                  <label for="name" class="form-label required-field">Name: </label>
                   <input type="text" class="form-control" id="name" name="userName" required>
                 </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email: </label>
+                  <label for="email" class="form-label required-field">Email: </label>
                   <input type="email" class="form-control" id="email" name="userEmail" required>
                 </div>
                 <div class="mb-3">
-                  <label for="password" class="form-label">Password: </label>
+                  <label for="password" class="form-label required-field">Password: </label>
                   <input type="password" class="form-control" id="password" name="userPassword" required>
                 </div>
                 

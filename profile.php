@@ -1,5 +1,5 @@
 <?php 
-  require_once('../config/connection.php');
+  require_once('config/connection.php');
   session_start();
   
   if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn']) {
@@ -73,13 +73,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GracefulGlam | Profile</title>
 
-  <?php @include('../layouts/header.php') ?>
+  <?php @include('layouts/header.php') ?>
 </head>
 
 <body>
   <div class="container-fluid bg-dark">
     <div class="container">
-      <?php @include('../layouts/navbar.php'); ?>
+      <?php @include('layouts/navbar.php'); ?>
     </div>
   </div>
 
@@ -165,7 +165,7 @@
       </div>
     </div>
 
-    <?php @include('../layouts/scripts.php') ?>
+    <?php @include('layouts/scripts.php') ?>
     <script>
     setActiveNavItem();
     </script>

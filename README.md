@@ -4,7 +4,7 @@ web dynamic
 
 ## **IMPORTANT
 
-Must add `../` for each path to avoid error
+Must add `../` for each pages inside their own folder to avoid error
 
 Example:
 
