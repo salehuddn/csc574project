@@ -50,7 +50,7 @@
   <div class="container-fluid">
     <div class="container my-4">
       <div class="row justify-content-center my-4">
-        <div class="col-md-8">
+        <div class="col-lg-4 col-md-4 col-sm-6">
           <div class="card">
             <div class="card-header fw-bold text-center">Register</div>
             <div class="card-body">
@@ -71,9 +71,13 @@
                   <label for="password" class="form-label">Password: </label>
                   <input type="password" class="form-control" id="password" name="userPassword" required>
                 </div>
+                
+                <div class="d-grid gap-2 mt-4">
+                  <button type="submit" class="btn btn-success" name="register">Register</button>
+                </div>
 
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary" name="register">Login</button>
+                <div class="d-flex justify-content-center">
+                  <p class="text-muted mt-2">Already have an account? <a href="login.php" class="text-decoration-none">Log in</a></p>
                 </div>
               </form>
             </div>
