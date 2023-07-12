@@ -2,9 +2,9 @@
 
 web dynamic
 
-### IMPORTANT
+## **IMPORTANT
 
-Must add **../** for each path to avoid error
+Must add `../` for each path to avoid error
 
 Example:
 
