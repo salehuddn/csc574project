@@ -6,6 +6,26 @@
   if (isset($_GET['registration']) && $_GET['registration'] === 'success') {
       echo '<div class="alert alert-success">Registration successful! You can now log in.</div>';
   }
+
+  if (isset($_SESSION['logoutMessage'])) {
+    $logoutMessage = $_SESSION['logoutMessage'];
+
+    //unset the logout message in the session
+    unset($_SESSION['logoutMessage']);
+
+    //display the logout message as alert
+    echo '<script>window.alert("' . $logoutMessage . '");</script>';
+  }
+
+  if (isset($_SESSION['loginMessage'])) {
+    $loginMessage = $_SESSION['loginMessage'];
+
+    //unset the login message in the session
+    unset($_SESSION['loginMessage']);
+
+    //display the login message as alert
+    echo '<script>window.alert("' . $loginMessage . '");</script>';
+  }
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +107,8 @@
     <?php @include('layouts/footer.php') ?>
 
     <!-- Scripts -->
-    <?php @include('layouts/scripts.php') ?> <script>
+    <?php @include('layouts/scripts.php') ?> 
+    <script>
     setActiveNavItem();
     </script>
 </body>

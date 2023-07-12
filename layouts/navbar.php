@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Check if user is logged in
+//check if user is logged in
 $loggedIn = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'];
 
 ?>

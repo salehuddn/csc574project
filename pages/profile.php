@@ -7,7 +7,7 @@
     exit();
   }
 
-  // Retrieve user information from the database
+  //retrieve user information
   $userId = $_SESSION['userId'];
   $query = "SELECT * FROM users WHERE id = $userId";
   $result = mysqli_query($connection, $query);
@@ -28,12 +28,12 @@
     $newName = $_POST['userName'];
     $newEmail = $_POST['userEmail'];
   
-    // Update the user's profile information
+    //update user's profile
     $query = "UPDATE users SET name = '$newName', email = '$newEmail' WHERE id = $userId";
     $updateResult = mysqli_query($connection, $query);
   
     if ($updateResult) {
-      // Update successful
+      //update success
       $name = $newName;
       $email = $newEmail;
       $profileSuccess = "Profile updated successfully.";
@@ -48,12 +48,12 @@
     $newState = $_POST['userState'];
     $newZipCode = $_POST['userZipCode'];
   
-    // Update the user's address information
+    //update user's address
     $query = "UPDATE users SET address = '$newAddress', city = '$newCity', state = '$newState', zip_code = '$newZipCode' WHERE id = $userId";
     $updateResult = mysqli_query($connection, $query);
   
     if ($updateResult) {
-      // Update successful
+      //update success
       $address = $newAddress;
       $city = $newCity;
       $state = $newState;

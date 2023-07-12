@@ -1,11 +1,15 @@
 <?php
 session_start();
 
-// Unset or destroy the relevant session variables
+//unset
 unset($_SESSION['loggedIn']);
-// or use session_destroy() to destroy the entire session if needed
+//or use session_destroy() to destroy the entire session if needed
 
-// Redirect to the desired page after logout
+//set the logout message in the session
+$_SESSION['logoutMessage'] = "Logged out successfully.";
+
+//redirect to index.php
 header('Location: index.php');
 exit();
+
 ?>

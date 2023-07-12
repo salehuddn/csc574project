@@ -16,10 +16,12 @@
         $userId = $row['id'];
         $hashedPassword = $row['password'];
 
-        // Verify the password
+        //verify password
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['loggedIn'] = true;
-            $_SESSION['userId'] = $userId; // Store the user's ID in the session
+            $_SESSION['userId'] = $userId; //store the user's ID in the session
+
+            $_SESSION['loginMessage'] = "Logged in successfully.";
             header('Location: index.php');
             exit();
         } else {
