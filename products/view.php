@@ -53,6 +53,20 @@
   <title>GracefulGlam | Products</title>
 
   <?php @include('../layouts/header.php') ?>
+  
+  <style>
+    .bg-male {
+      background-color: #274c77 !important;
+    }
+
+    .bg-female {
+      background-color: #da627d !important;
+    }
+
+    .bg-unisex {
+      background-color: #a98467 !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -78,11 +92,11 @@
                 <table class="table table-bordered">
                   <thead class="border">
                     <tr class="table-light">
-                      <th scope="col">Name</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Stock</th>
-                      <th scope="col">Sold</th>
+                      <th scope="col" class="text-center">Name</th>
+                      <th scope="col" class="text-center">Category</th>
+                      <th scope="col" class="text-center">Price</th>
+                      <th scope="col" class="text-center">Stock</th>
+                      <th scope="col" class="text-center">Sold</th>
                       <th scope="col" class="text-center" width="10%">Action</th>
                     </tr>
                   </thead>
@@ -92,25 +106,45 @@
 
                         if ($result && mysqli_num_rows($result) > 0) {
                           while ($row = mysqli_fetch_assoc($result)) {
+                            $id = $row['id'];
                             $name = $row['name'];
                             $category = $row['category_name'];
                             $subcategory = $row['subcategory_name'];
                             $price = $row['price'];
                             $stock = $row['stock'];
                             $sold = $row['sold'];
+                            $image = $row['image_path'];
                       ?>
                       <tr class="border">
-                        <td><?php echo $name ?? '' ?></td>
                         <td>
-                          <?php echo $category ?? '' ?> | <?php echo $subcategory ?? '' ?>
+                          <div class="d-flex flex-wrap">
+                            <a href="<?php echo $image; ?>" target="_blank">
+                              <img src="<?php echo $image; ?>" class="rounded float-start me-2" alt="image" width="30" height="30">
+                            </a>
+                            <?php echo $name ?? '' ?>
+                          </div>
                         </td>
-                        <td><?php echo $price ?? '' ?></td>
-                        <td><?php echo $stock ?? '' ?></td>
-                        <td><?php echo $sold ?? '' ?></td>
                         <td class="text-center">
-                          <a href="../products/show.php" class="text-dark"><ion-icon name="eye-outline"></ion-icon></a>
-                          <a href="../products/create.php" class="text-dark"><ion-icon name="create-outline"></ion-icon></a>
-                          <a href="../products/delete.php" class="text-dark"><ion-icon name="trash-outline"></ion-icon></a>
+                          <?php 
+                          if ($category == 'Men') {
+                            echo '<span class="badge bg-male">' .$category. '</span>';
+                          } else if ($category == 'Women') {
+                            echo '<span class="badge bg-female">' .$category. '</span>';
+                          } else if ($category == 'Unisex') {
+                            echo '<span class="badge bg-unisex">' .$category. '</span>';
+                          } else {
+                            echo '';
+                          }
+                          ?> 
+                          <?php echo '<span class="badge bg-secondary">' .$subcategory ?? ''. '</span>'; ?>
+                        </td>
+                        <td class="text-center">RM <?php echo $price ?? '' ?></td>
+                        <td class="text-center"><?php echo $stock ?? '' ?></td>
+                        <td class="text-center"><?php echo $sold ?? '' ?></td>
+                        <td class="text-center">
+                          <a href="../products/show.php?product_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="eye-outline"></ion-icon></a>
+                          <a href="../products/edit.php?product_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="create-outline"></ion-icon></a>
+                          <a href="../products/delete.php?product_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="trash-outline"></ion-icon></a>
                         </td>
                       </tr>
                       <?php
