@@ -8,7 +8,7 @@ function setActiveNavItem() {
     let link = navLinks[i];
 
     if (link.getAttribute('href') === currentPagePath) {
-      link.parentNode.classList.add('active');
+      link.parentNode.classList.add('fw-bold');
     }
   }
 }
