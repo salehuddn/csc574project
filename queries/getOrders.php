@@ -1,7 +1,6 @@
 <?php
 
 require_once('../config/connection.php');
-session_start();
 
 $query = "SELECT a.*, b.*, c.name as 'product_name'
           FROM orders a

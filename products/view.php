@@ -1,18 +1,7 @@
 <?php 
   require_once '../config/connection.php';
   session_start();
-  
-  $email = $password = $name = '';
 
-  if (isset($_SESSION['registerMessage'])) {
-    $registerMessage = $_SESSION['registerMessage'];
-
-    //unset the register message in the session
-    unset($_SESSION['registerMessage']);
-
-    //display the register message as alert
-    echo '<script>window.alert("' . $registerMessage . '");</script>';
-  }
 
   if (isset($_POST['login'])) {
     $email = $_POST['userEmail'];
