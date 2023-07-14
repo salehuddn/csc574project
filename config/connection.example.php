@@ -2,8 +2,8 @@
 
 $host="localhost";
 $db="graceful_glam";
-$user="root";
-$password="Revense_2401";
+$user=""; //eg: root
+$password=""; //eg: password
 
 $connection = mysqli_connect($host, $user, $password, $db);
 
