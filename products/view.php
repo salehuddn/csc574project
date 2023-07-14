@@ -2,35 +2,11 @@
   require_once '../config/connection.php';
   session_start();
 
-
-  if (isset($_POST['login'])) {
-    $email = $_POST['userEmail'];
-    $password = $_POST['userPassword'];
-
-    $query = "SELECT id, password FROM users WHERE email = '$email'";
-    $result = mysqli_query($connection, $query);
-
-    if ($result && mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_assoc($result);
-        $userId = $row['id'];
-        $hashedPassword = $row['password'];
-
-        //verify password
-        if (password_verify($password, $hashedPassword)) {
-            $_SESSION['loggedIn'] = true;
-            $_SESSION['userId'] = $userId; //store the user's ID in the session
-            $_SESSION['role'] = $role;
-
-            $_SESSION['loginMessage'] = "Logged in successfully.";
-            header('Location: index.php');
-            exit();
-        } else {
-            $loginError = "Invalid email or password.";
-        }
-    } else {
-        $loginError = "Invalid email or password.";
-    }
+  if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn'] || $_SESSION['role'] !== 'admin') {
+    header('Location: login.php');
+    exit();
   }
+ 
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +48,9 @@
           <div class="card">
             <div class="card-header fw-bold text-center">Products</div>
             <div class="card-body">
+              <!-- Alert Message -->
+              <div class="alert-container"></div>
+
               <!-- Add Product Button -->
               <div class="d-flex justify-content-end mb-3">
                 <a href="../products/create.php" class="btn btn-primary">Add Product</a>
@@ -81,6 +60,7 @@
                 <table class="table table-bordered">
                   <thead class="border">
                     <tr class="table-light">
+                      <th scope="col" class="text-center fw-bold">#</th>
                       <th scope="col" class="text-center">Name</th>
                       <th scope="col" class="text-center">Category</th>
                       <th scope="col" class="text-center">Price</th>
@@ -92,24 +72,30 @@
                   <tbody class="border">
                       <?php
                         require('../queries/getProducts.php');
-
-                        if ($result && mysqli_num_rows($result) > 0) {
-                          while ($row = mysqli_fetch_assoc($result)) {
-                            $id = $row['id'];
-                            $name = $row['name'];
-                            $category = $row['category_name'];
-                            $subcategory = $row['subcategory_name'];
-                            $price = $row['price'];
-                            $stock = $row['stock'];
-                            $sold = $row['sold'];
-                            $image = $row['image_path'];
+                        while ($row = mysqli_fetch_assoc($result)) {
+                          $id = $row['id'];
+                          $name = $row['name'];
+                          $category = $row['category_name'];
+                          $subcategory = $row['subcategory_name'];
+                          $price = $row['price'];
+                          $stock = $row['stock'];
+                          $sold = $row['sold'];
+                          $image = $row['image_path'];
                       ?>
                       <tr class="border">
+                        <td class="text-center">
+                          <?php echo $index; ?>
+                        </td>
                         <td>
                           <div class="d-flex flex-wrap">
-                            <a href="<?php echo $image; ?>" target="_blank">
-                              <img src="<?php echo $image; ?>" class="rounded float-start me-2" alt="image" width="30" height="30">
-                            </a>
+                            <?php if (!empty($image)) : ?>
+                              <a href="<?php echo $image; ?>" target="_blank">
+                                <img src="<?php echo $image; ?>" class="rounded float-start me-2" alt="image" width="25" height="25">
+                              </a>
+                            <?php else : ?>
+                              <img src="../images/no-image-2.png" class="rounded float-start me-2" alt="image" width="25" height="25">
+                            <?php endif; ?>
+
                             <?php echo $name ?? '' ?>
                           </div>
                         </td>
@@ -131,17 +117,14 @@
                         <td class="text-center"><?php echo $stock ?? '' ?></td>
                         <td class="text-center"><?php echo $sold ?? '' ?></td>
                         <td class="text-center">
-                          <a href="../products/show.php?product_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="eye-outline"></ion-icon></a>
                           <a href="../products/edit.php?product_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="create-outline"></ion-icon></a>
-                          <a href="../products/delete.php?product_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="trash-outline"></ion-icon></a>
+                          <a class="text-dark delete-product" data-product-id="<?php echo $id; ?>" style="cursor: pointer;"><ion-icon name="trash-outline"></ion-icon></a>
                         </td>
                       </tr>
-                      <?php
+                        <?php
+                            $index++;
                           }
-                        } else {
-                          echo 'No data found';
-                        }
-                      ?>
+                        ?>
                   </tbody>
                 </table>
               </div>
@@ -153,6 +136,48 @@
 
     <?php @include('../layouts/scripts.php') ?>
     <script>
+      $(document).on('click', '.delete-product', function() {
+        if (confirm("Are you sure you want to delete this product?")) {
+          var productId = $(this).data('product-id');
+          deleteProduct(productId);
+        }
+      });
+
+      function deleteProduct(productId) {
+        $.ajax({
+          url: '../queries/destroyProduct.php',
+          method: 'POST',
+          data: { product_id: productId },
+          success: function(response) {
+            var data = JSON.parse(response);
+
+            if (data.success) {
+              //success message
+              showAlert('success', data.message);
+            } else {
+              //error message
+              showAlert('error', data.message);
+            }
+
+            if (data.success) {
+              setTimeout(function() {
+                window.location.href = '../products/view.php';
+              }, 2000);
+            }
+          }
+        });
+      }
+
+      function showAlert(type, message) {
+        var alertClass = (type === 'success') ? 'alert-success' : 'alert-danger';
+
+        var alertHtml = '<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' +
+          message +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          '</div>';
+
+        $('.alert-container').html(alertHtml);
+      }
     </script>
 </body>
 
