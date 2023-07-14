@@ -20,6 +20,8 @@ $loggedIn = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'];
           if ($_SESSION['role'] === 'admin') {
             echo '<li class="nav-item"><a href="../products/view.php" class="nav-link">Products</a></li>';
             echo '<li class="nav-item"><a href="../categories/view.php" class="nav-link">Categories</a></li>';
+            echo '<li class="nav-item"><a href="../users/view.php" class="nav-link">Users</a></li>';
+            echo '<li class="nav-item"><a href="../orders/view.php" class="nav-link">Orders</a></li>';
           } else { ?>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
