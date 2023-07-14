@@ -53,7 +53,7 @@
 
               <!-- Add Product Button -->
               <div class="d-flex justify-content-end mb-3">
-                <a href="../products/create.php" class="btn btn-primary">Add Product</a>
+                <a href="../products/create.php" class="btn btn-sm btn-primary">Add Product</a>
               </div>
 
               <div class="table-responsive">
