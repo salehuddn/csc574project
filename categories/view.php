@@ -72,6 +72,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               <?php endif; ?>
+              <div class="category-alert-container"></div>
 
               <!-- Add Product Button -->
               <div class="d-flex justify-content-end mb-3">
@@ -113,15 +114,8 @@
                           ?> 
                         </td>
                         <td class="text-center">
-                          <div class="d-flex justify-content-center">
-                            <a href="../categories/edit.php?category=true&category_id=<?php echo $id; ?>" class="btn btn-sm text-dark"><ion-icon name="create-outline"></ion-icon></a>
-                            <form class="delete-category-form" action="../queries/destroyCategory.php" method="POST">
-                              <input type="hidden" name="category_id" value="<?php echo $id; ?>">
-                              <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete this category?')">
-                                <ion-icon name="trash-outline"></ion-icon>
-                              </button>
-                            </form>
-                          </div>
+                          <a href="../categories/edit.php?category=true&category_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="create-outline"></ion-icon></a>
+                          <a class="text-dark delete-category" data-category-id="<?php echo $id; ?>" style="cursor: pointer;"><ion-icon name="trash-outline"></ion-icon></a>
                         </td>
                       </tr>
                       <?php
@@ -156,6 +150,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               <?php endif; ?>
+              <div class="subcategory-alert-container"></div>
 
               <!-- Add Product Button -->
               <div class="d-flex justify-content-end mb-3">
@@ -185,15 +180,8 @@
                         <td class="text-center"><?php echo $index; ?></td>
                         <td class="text-center"><?php echo $name ?? ''; ?></td>
                         <td class="text-center">
-                          <div class="d-flex justify-content-center">
-                            <a href="../categories/edit.php?subcategory=true&category_id=<?php echo $id; ?>" class="btn btn-sm text-dark"><ion-icon name="create-outline"></ion-icon></a>
-                            <form class="delete-subcategory-form" action="../queries/destroyCategory.php" method="POST">
-                              <input type="hidden" name="subcategory_id" value="<?php echo $id; ?>">
-                              <button type="submit" class="btn btn-sm" onclick="return confirm('Are you sure you want to delete this subcategory?')">
-                                <ion-icon name="trash-outline"></ion-icon>
-                              </button>
-                            </form>
-                          </div>
+                          <a href="../categories/edit.php?subcategory=true&category_id=<?php echo $id; ?>" class="text-dark"><ion-icon name="create-outline"></ion-icon></a>
+                          <a class="text-dark delete-subcategory" data-subcategory-id="<?php echo $id; ?>" style="cursor: pointer;"><ion-icon name="trash-outline"></ion-icon></a>
                         </td>
                       </tr>
                       <?php
@@ -213,7 +201,83 @@
     </div>
 
     <?php @include('../layouts/scripts.php') ?>
+    <script>
+      $(document).on('click', '.delete-category', function() {
+        if (confirm("Are you sure you want to delete this category?")) {
+          var categoryId = $(this).data('category-id');
+          deleteCategory(categoryId);
+        }
+      });
 
+      function deleteCategory(categoryId) {
+        $.ajax({
+          url: '../queries/destroyCategory.php',
+          method: 'POST',
+          data: { category_id: categoryId },
+          success: function(response) {
+            var data = JSON.parse(response);
+
+            if (data.success) {
+              // Success message
+              showAlert('success', data.message);
+            } else {
+              // Error message
+              showAlert('error', data.message);
+            }
+
+            if (data.success) {
+              setTimeout(function() {
+                window.location.href = '../categories/view.php';
+              }, 2000);
+            }
+          }
+        });
+      }
+
+      $(document).on('click', '.delete-subcategory', function() {
+        if (confirm("Are you sure you want to delete this subcategory?")) {
+          var subcategoryId = $(this).data('subcategory-id');
+          deleteSubcategory(subcategoryId);
+        }
+      });
+
+      function deleteSubcategory(subcategoryId) {
+        $.ajax({
+          url: '../queries/destroyCategory.php',
+          method: 'POST',
+          data: { subcategory_id: subcategoryId },
+          success: function(response) {
+            var data = JSON.parse(response);
+
+            if (data.success) {
+              // Success message
+              showAlert('success', data.message);
+            } else {
+              // Error message
+              showAlert('error', data.message);
+            }
+
+            if (data.success) {
+              setTimeout(function() {
+                window.location.href = '../categories/view.php';
+              }, 2000);
+            }
+          }
+        });
+      }
+
+      function showAlert(type, message) {
+        var alertClass = (type === 'success') ? 'alert-success' : 'alert-danger';
+
+        var alertHtml = '<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' +
+          message +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          '</div>';
+
+        $('.alert-container').html(alertHtml);
+      }
+
+    </script>
 </body>
 
 </html>
