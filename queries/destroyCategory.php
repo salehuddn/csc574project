@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $response = array(
         'success' => true,
-        'message' => $successMsg
+        'message' => $successMsg,
+        'section' => 'category'
       );
     } else {
       $errorMsg = "An error occurred while deleting the category.";
@@ -25,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $response = array(
         'success' => false,
-        'message' => $errorMsg
+        'message' => $errorMsg,
+        'section' => 'category'
       );
     }
 
@@ -43,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $response = array(
         'success' => true,
-        'message' => $successMsg
+        'message' => $successMsg,
+        'section' => 'subcategory'
       );
     } else {
       $errorMsg = "An error occurred while deleting the subcategory.";
@@ -52,7 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $response = array(
         'success' => false,
-        'message' => $errorMsg
+        'message' => $errorMsg,
+        'section' => 'subcategory'
       );
     }
 

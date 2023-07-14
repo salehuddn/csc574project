@@ -218,11 +218,11 @@
             var data = JSON.parse(response);
 
             if (data.success) {
-              // Success message
-              showAlert('success', data.message);
+              //success message
+              showAlert('success', data.message, 'category');
             } else {
-              // Error message
-              showAlert('error', data.message);
+              //error message
+              showAlert('error', data.message, 'category');
             }
 
             if (data.success) {
@@ -250,11 +250,11 @@
             var data = JSON.parse(response);
 
             if (data.success) {
-              // Success message
-              showAlert('success', data.message);
+              //success message
+              showAlert('success', data.message, 'subcategory');
             } else {
-              // Error message
-              showAlert('error', data.message);
+              //error message
+              showAlert('error', data.message, 'subcategory');
             }
 
             if (data.success) {
@@ -266,17 +266,17 @@
         });
       }
 
-      function showAlert(type, message) {
+      function showAlert(type, message, section) {
         var alertClass = (type === 'success') ? 'alert-success' : 'alert-danger';
+        var alertContainer = (section === 'category') ? '.category-alert-container' : '.subcategory-alert-container';
 
         var alertHtml = '<div class="alert ' + alertClass + ' alert-dismissible fade show" role="alert">' +
           message +
           '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
           '</div>';
 
-        $('.alert-container').html(alertHtml);
+        $(alertContainer).html(alertHtml);
       }
-
     </script>
 </body>
 
