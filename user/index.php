@@ -1,5 +1,5 @@
 <?php 
-  require_once 'config/connection.php';
+  require_once '../config/connection.php';
   session_start();
 
   if (isset($_GET['registration']) && $_GET['registration'] === 'success') {
@@ -35,15 +35,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GracefulGlam</title>
 
-  <?php @include('layouts/header.php') ?>
+  <?php @include('../layouts/header.php') ?>
 </head>
 
 <body>
   <div class="container-fluid bg-dark">
     <div class="container">
-      <?php 
-        @include('layouts/navbar.php');
-      ?>
+      <?php @include('../user/navbar.php'); ?>
     </div>
   </div>
 
@@ -52,7 +50,7 @@
       <!-- Header -->
       <div class="row my-2">
         <div class="d-flex justify-content-end mb-3">
-          <?php @include('layouts/search.php'); ?>
+          <?php @include('../layouts/search.php'); ?>
         </div>
         <div class="card border">
           <div class="container">
@@ -61,7 +59,7 @@
                 <h2>Free delivery with purchase above RM100</h2>
               </div>
               <div class="col-md-6 p-4 text-center">
-                <img src="images/kasut2.jpg" alt="#" width="50%">
+                <img src="../images/kasut2.jpg" alt="#" width="50%">
               </div>
             </div>
           </div>
@@ -73,7 +71,7 @@
         <div class="col">
           <div class="card">
             <div class="row align-items-center">
-              <img src="images/kasut2.jpg" alt="#" width="60%">
+              <img src="../images/kasut2.jpg" alt="#" width="60%">
             </div>
             <div class="px-4 py-2 text-center">
               <p class="fw-bold">KASUT NIKE 1</p>
@@ -83,7 +81,7 @@
         <div class="col">
           <div class="card">
             <div class="row align-items-center">
-              <img src="images/kasut2.jpg" alt="#" width="60%">
+              <img src="../images/kasut2.jpg" alt="#" width="60%">
             </div>
             <div class="px-4 py-2 text-center">
               <p class="fw-bold">KASUT NIKE 2</p>
@@ -93,7 +91,7 @@
         <div class="col">
           <div class="card">
             <div class="row align-items-center">
-              <img src="images/kasut2.jpg" alt="#" width="60%">
+              <img src="../images/kasut2.jpg" alt="#" width="60%">
             </div>
             <div class="px-4 py-2 text-center">
               <p class="fw-bold">KASUT NIKE 3</p>
@@ -105,10 +103,10 @@
   </div>
 
     <!-- Footer -->
-    <?php @include('layouts/footer.php') ?>
+    <?php @include('../layouts/footer.php') ?>
 
     <!-- Scripts -->
-    <?php @include('layouts/scripts.php') ?> 
+    <?php @include('../layouts/scripts.php') ?> 
     <script>
     setActiveNavItem();
     </script>

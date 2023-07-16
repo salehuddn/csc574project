@@ -34,8 +34,14 @@
             $_SESSION['role'] = $role;
             $_SESSION['loginMessage'] = "Logged in successfully.";
 
-            header('Location: index.php');
-            exit();
+            if ($_SESSION['role'] == 'admin') {
+                header('Location: ../admin/index.php');
+            } elseif ($_SESSION['role'] == 'user') {
+                header('Location: ../user/index.php');
+            } else {
+              header('Location: index.php');
+              exit();
+            }
         } else {
             $loginError = "Invalid email or password.";
         }
@@ -59,7 +65,9 @@
 <body>
   <div class="container-fluid bg-dark">
     <div class="container">
-      <?php @include('layouts/navbar.php'); ?>
+      <?php 
+        @include('layouts/navbar.php');
+      ?>
     </div>
   </div>
 
