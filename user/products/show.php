@@ -47,7 +47,7 @@
                     <div class="carousel-inner">
                       <?php foreach ($images as $image) { ?>
                         <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                          <img src="../../admin<?php echo $image['image_path']; ?>" alt="Image <?php echo $index + 1; ?>" class="d-block mx-auto" width="550" height="550">
+                          <img src="../../admin/<?php echo $image['image_path']; ?>" alt="Image <?php echo $index + 1; ?>" class="d-block mx-auto" width="550" height="550">
                         </div>
                         <?php $index++; ?>
                       <?php } ?>

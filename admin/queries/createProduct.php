@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
             $fileError = $_FILES['productImage']['error'][$i];
     
             if ($fileError === UPLOAD_ERR_OK) {
-                $uploadDirectory = '../products/images/';
+                $uploadDirectory = '../../admin/products/images/';
                 $targetFilePath = $uploadDirectory . $fileName;
     
                 //move uploaded image to the target directory

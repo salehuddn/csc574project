@@ -62,7 +62,7 @@
                     <div class="col mb-4">
                       <a href="../../user/products/show.php?product_id=<?=$product['id']?>" class="text-decoration-none">
                         <?php if (!empty($product['image_path'])) : ?>
-                          <img src="../../admin/<?=$product['image_path']?>" width="250" height="250" alt="<?=$product['name']?>" class="rounded">
+                          <img src="../../../admin/<?=$product['image_path']?>" width="250" height="250" alt="<?=$product['name']?>" class="rounded">
                         <?php else : ?>
                           <img src="../../images/no-image-2.png" width="250" height="250" alt="<?=$product['name']?>" class="rounded">
                         <?php endif; ?>
