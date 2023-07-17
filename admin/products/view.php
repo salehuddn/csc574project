@@ -108,7 +108,7 @@
                           } else if ($category == 'Unisex') {
                             echo '<span class="badge bg-unisex">' .$category. '</span>';
                           } else {
-                            echo '';
+                            echo $category;
                           }
                           ?> 
                           <?php echo '<span class="badge bg-secondary">' .$subcategory ?? ''. '</span>'; ?>

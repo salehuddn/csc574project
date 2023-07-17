@@ -29,7 +29,7 @@
 <body>
   <div class="container-fluid bg-dark">
     <div class="container">
-      <?php @include('../../layouts/navbar.php'); ?>
+      <?php @include('../../user/navbar.php'); ?>
     </div>
   </div>
 
@@ -60,7 +60,7 @@
                 <div class="row row-cols-md-4 row-cols-1">
                   <?php foreach ($products as $product): ?>
                     <div class="col mb-4">
-                      <a href="index.php?page=product&id=<?=$product['id']?>" class="text-decoration-none">
+                      <a href="../../user/products/show.php?product_id=<?=$product['id']?>" class="text-decoration-none">
                         <?php if (!empty($product['image_path'])) : ?>
                           <img src="../../admin/<?=$product['image_path']?>" width="250" height="250" alt="<?=$product['name']?>" class="rounded">
                         <?php else : ?>
