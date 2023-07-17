@@ -15,5 +15,5 @@ $result = mysqli_query($connection, $query);
 if ($result && mysqli_num_rows($result) > 0) {
   $index = 1;
 } else {
-  echo "Error";
+  echo "No product found.";
 }

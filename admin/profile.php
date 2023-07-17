@@ -16,6 +16,7 @@
     $row = mysqli_fetch_assoc($result);
     $name = $row['name'];
     $email = $row['email'];
+    $phone = $row['phone_number'];
     $address = $row['address'];
     $city = $row['city'];
     $state = $row['state'];
@@ -27,9 +28,10 @@
   if (isset($_POST['profile'])) {
     $newName = $_POST['userName'];
     $newEmail = $_POST['userEmail'];
+    $newPhone = $_POST['userPhone'];
   
     //update user's profile
-    $query = "UPDATE users SET name = '$newName', email = '$newEmail' WHERE id = $userId";
+    $query = "UPDATE users SET name = '$newName', email = '$newEmail', phone_number = '$newPhone' WHERE id = $userId";
     $updateResult = mysqli_query($connection, $query);
   
     if ($updateResult) {
@@ -79,7 +81,7 @@
 <body>
   <div class="container-fluid bg-dark">
     <div class="container">
-      <?php @include('navbar.php'); ?>
+      <?php @include('../admin/navbar.php'); ?>
     </div>
   </div>
 
@@ -110,6 +112,10 @@
                   <div class="mb-3">
                     <label for="email" class="form-label">Email: </label>
                     <input type="email" class="form-control" id="userEmail" name="userEmail" value="<?php echo $email; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number: </label>
+                    <input type="number" class="form-control" id="userPhone" name="userPhone" value="<?php echo $phone; ?>">
                   </div>
                   <div class="mb-3">
                     <label for="password" class="form-label">Password: </label>
