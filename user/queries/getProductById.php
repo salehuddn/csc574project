@@ -28,10 +28,9 @@ if ($productResult && mysqli_num_rows($productResult) == 1) {
 $getImagesQuery = "SELECT * FROM product_images WHERE product_id = $id";
 $getImagesResult = mysqli_query($connection, $getImagesQuery);
 
-if ($getImagesResult && mysqli_num_rows($getImagesResult) == 1) {
-  $imagesRow = mysqli_fetch_assoc($getImagesResult);
-  $imageId = $imagesRow['id'];
-  $imagePath = $imagesRow['image_path'];
+if ($getImagesResult && mysqli_num_rows($getImagesResult) > 0) {
+  $index = 0;
+  $images = mysqli_fetch_all($getImagesResult, MYSQLI_ASSOC);
 } else {
   echo "Error";
 }
