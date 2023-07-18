@@ -149,7 +149,7 @@ require('../queries/updateProductById.php');
                         <div class="row">
                           <?php while ($image = mysqli_fetch_assoc($getImagesResult)) : ?>
                             <div class="col-md-4 mb-3">
-                              <img src="<?php echo $image['image_path']; ?>" alt="Product Image" class="img-thumbnail">
+                              <img src="../../admin<?php echo $image['image_path']; ?>" alt="Product Image" class="img-thumbnail">
                               <button type="button" class="btn btn-sm btn-danger mt-2 delete-image" data-image-id="<?php echo $image['id']; ?>">Delete</button>
                             </div>
                           <?php endwhile; ?>

@@ -160,9 +160,6 @@
   </div>
 
     <?php @include('../../layouts/scripts.php') ?>
-    <script>
-    setActiveNavItem();
-    </script>
 </body>
 
 </html>

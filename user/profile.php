@@ -170,9 +170,6 @@
   <?php @include('../layouts/footer.php') ?>
   <!-- Scripts -->
   <?php @include('../layouts/scripts.php') ?>
-  <script>
-  setActiveNavItem();
-  </script>
 </body>
 
 </html>

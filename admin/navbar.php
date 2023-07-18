@@ -13,7 +13,7 @@
         <li class="nav-item"><a href="../../admin/users/view.php" class="nav-link">Users</a></li>
         <li class="nav-item"><a href="../../admin/orders/view.php" class="nav-link">Orders</a></li>
         <li class="nav-item"><a href="../../admin/profile.php" class="nav-link">Profile</a></li>
-        <li class="nav-item"><a href="../../logout.php" class="nav-link">Logout</a></li>
+        <li class="nav-item"><a href="../../logout.php" class="nav-link fs-5"><ion-icon name="log-out-outline"></ion-icon></a></li>
       </ul>
     </div>
   </div>
