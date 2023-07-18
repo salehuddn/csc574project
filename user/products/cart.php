@@ -68,8 +68,7 @@
 
   // Send the user to the place order page if they click the "Place Order" button, and the cart should not be empty
   if (isset($_POST['placeorder']) && isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    header('Location: ../../user/products/placeorder.php');
-    exit;
+    require_once '../../user/queries/createOrders.php'; 
   }
 
   // Check the session variable for products in the cart
