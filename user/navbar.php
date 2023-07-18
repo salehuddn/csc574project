@@ -1,3 +1,7 @@
+<?php
+  $num_items_in_cart = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+?>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a href="#" class="logo"><img src="../../images/logo-svg-2.svg" alt="GracefulGlam" width="20%"></a>
@@ -36,7 +40,15 @@
         </li>
         <li class="nav-item"><a href="../../user/orders/view.php" class="nav-link">Orders</a></li>
         <li class="nav-item"><a href="../../user/profile.php" class="nav-link">Profile</a></li>
-        <li class="nav-item"><a href="../../logout.php" class="nav-link">Logout</a></li>
+        <li class="nav-item position-relative">
+          <a href="../../user/products/cart.php" class="nav-link fs-5 position-relative">
+            <ion-icon name="cart-outline"></ion-icon>
+            <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-danger mt-2" style="font-size: .5em !important;">
+              <?= $num_items_in_cart ?>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="../../logout.php" class="nav-link fs-5"><ion-icon name="log-out-outline"></ion-icon></a></li>
       </ul>
     </div>
   </div>
