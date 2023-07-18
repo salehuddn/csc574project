@@ -180,15 +180,15 @@
                   <?php endforeach; ?>
                   <?php endif; ?>
                   <tr>
-                  <tr>
-                    <td colspan="4" class="text-end">Subtotal:</td>
+                  <tr height="100px">
+                    <td colspan="4" class="text-end fs-5">Subtotal</td>
                     <td class="text-end subtotal-cell">RM <?=$subtotal?></td>
                   </tr>
                 </tbody>
                 </table>
                 <div class="d-flex justify-content-end gap-2">
-                    <button type="submit" name="update" class="btn btn-secondary">Save</button>
-                    <button type="button" class="btn btn-success">Place Order</button>
+                    <button type="submit" name="update" class="btn btn-secondary">Update Cart</button>
+                    <button type="submit" name="placeorder" class="btn btn-success">Place Order</button>
                 </div>
             </form>
             </div>

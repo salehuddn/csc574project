@@ -3,7 +3,7 @@ session_start();
 
 //unset
 unset($_SESSION['loggedIn']);
-//or use session_destroy() to destroy the entire session if needed
+unset($_SESSION['cart']);
 
 //set the logout message in the session
 $_SESSION['logoutMessage'] = "Logged out successfully.";

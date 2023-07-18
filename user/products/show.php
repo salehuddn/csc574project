@@ -73,11 +73,13 @@
                     RM <?=$price?>
                 </span>
                 <form action="../../user/products/cart.php" method="post" class="row g-2 mt-4">
-                  <div class="col-auto">
-                    <label for="quantity">Quantity</label>
+                  <div class="d-flex justify-content-start">
+                    <p class="fw-light mb-0">Quantity</p>
+                  </div>
+                  <div class="col-2">
                     <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" max="<?=$stock?>" required>
                   </div>
-                  <div class="col-auto pt-4">
+                  <div class="col-auto">
                     <input type="hidden" name="product_id" value="<?=$id?>">
                     <input type="submit" class="btn btn-primary" value="Add To Cart">
                   </div>
