@@ -1,3 +1,5 @@
+<?php $year = date('Y'); ?>
+
 <div class="container">
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
     <div class="col-md-4 d-flex align-items-center">
@@ -6,7 +8,7 @@
           <use xlink:href="#bootstrap"></use>
         </svg>
       </a>
-      <span class="text-muted">© 2023 GracefulGlam, Inc</span>
+      <span class="text-muted">© <?= $year ?> GracefulGlam, Inc</span>
     </div>
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">

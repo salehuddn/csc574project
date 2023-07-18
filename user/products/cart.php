@@ -97,6 +97,21 @@
           $subtotal += (float)$product['price'] * (int)$products_in_cart[$product['id']];
       }
   }
+
+  // Function to remove a product from the cart
+  function removeProductFromCart($product_id)
+  {
+      if (isset($_SESSION['cart']) && isset($_SESSION['cart'][$product_id])) {
+          unset($_SESSION['cart'][$product_id]);
+      }
+  }
+
+  // Check if the "remove" parameter is set and call the remove function
+  if (isset($_GET['remove']) && is_numeric($_GET['remove'])) {
+      $product_id_to_remove = $_GET['remove'];
+      removeProductFromCart($product_id_to_remove);
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -124,58 +139,58 @@
           <div class="card border-0">
             <div class="card-header fw-bold text-center fs-4 bg-white border-0"><?= $pageTitle ?></div>
             <div class="card-body">
-              <table class="table align-middle">
-                <thead class="border-bottom">
-                  <tr class="fw-normal">
-                    <th colspan="2">Product</th>
-                    <th>Price</th>
-                    <th width=5%>Quantity</th>
-                    <th class="text-end">Total</th>
-                  </tr>
-                </thead>
-                <tbody class="border-bottom">
+              <form action="../../user/products/cart.php" method="post">
+                <table class="table align-middle">
+                  <thead class="border-bottom">
+                    <tr class="fw-normal">
+                      <th colspan="2">Product</th>
+                      <th>Price</th>
+                      <th width=5%>Quantity</th>
+                      <th class="text-end">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody class="border-bottom">
                   <?php if (empty($products)): ?>
                   <tr>
-                      <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
+                    <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
                   </tr>
                   <?php else: ?>
                   <?php foreach ($products as $product): ?>
-                        <tr>
-                          <td class="img">
-                            <a href="../../user/products/show.php?product_id=<?=$product['id']?>">
-                              <?php if (!empty($product['image_path'])) : ?>
-                                <img src="../../admin/<?=$product['image_path']?>" width="50" height="50" alt="<?=$product['name']?>">
-                              <?php else : ?>
-                                <img src="../../images/no-image-2.png" width="50" height="50" alt="<?=$product['name']?>">
-                              <?php endif; ?>
-                            </a>
-                          </td>
-                          <td>
-                            <?=$product['name']?>
-                            <br>
-                            <small><a href="" class="link-secondary small text-decoration-none">Remove</a></small>
-                          </td>
-                          <td>RM <?=$product['price']?></td>
-                          <td>
-                            <input type="number" class="form-control" min="1" max="<?=$product['stock']?>" name="quantity-<?=$product['id']?>" value="<?=$products_in_cart[$product['id']]?>" placeholder="Quantity" required>
-                          </td>
-                          <td class="text-end">RM <?=$product['price'] * $products_in_cart[$product['id']]?></td>
-                        </tr>
+                  <tr>
+                    <td class="img">
+                      <a href="../../user/products/show.php?product_id=<?=$product['id']?>">
+                        <?php if (!empty($product['image_path'])) : ?>
+                          <img src="../../admin/<?=$product['image_path']?>" width="50" height="50" alt="<?=$product['name']?>">
+                        <?php else : ?>
+                          <img src="../../images/no-image-2.png" width="50" height="50" alt="<?=$product['name']?>">
+                        <?php endif; ?>
+                      </a>
+                    </td>
+                    <td>
+                      <?=$product['name']?>
+                      <br>
+                      <small><a href="?remove=<?=$product['id']?>" class="link-secondary small text-decoration-none">Remove</a></small>
+                    </td>
+                    <td>RM <?=$product['price']?></td>
+                    <td>
+                      <input type="number" class="form-control quantity-input" min="1" max="<?=$product['stock']?>" name="quantity-<?=$product['id']?>" value="<?=$products_in_cart[$product['id']]?>" placeholder="Quantity" required>
+                    </td>
+                    <td class="text-end subtotal-cell">RM <?=$product['price'] * $products_in_cart[$product['id']]?></td>
+                  </tr>
                   <?php endforeach; ?>
                   <?php endif; ?>
                   <tr>
                   <tr>
                     <td colspan="4" class="text-end">Subtotal:</td>
-                    <td class="text-end">RM <?=$subtotal?></td>
+                    <td class="text-end subtotal-cell">RM <?=$subtotal?></td>
                   </tr>
                 </tbody>
-              </table>
-              <div class="d-flex justify-content-end gap-2">
-                  <form action="../../user/products/cart.php" method="post">
-                    <button type="submit" name="reset_cart" class="btn btn-secondary">Reset</button>
-                  </form>
-                  <button type="button" class="btn btn-success">Place Order</button>
-              </div>
+                </table>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="submit" name="update" class="btn btn-secondary">Save</button>
+                    <button type="button" class="btn btn-success">Place Order</button>
+                </div>
+            </form>
             </div>
           </div>
         </div>
