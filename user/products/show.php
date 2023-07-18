@@ -22,6 +22,11 @@
 
   <?php @include('../../layouts/header.php') ?>
 </head>
+<style>
+  .badge .rounded-pill .bg-danger {
+    font-size: .6em !important;
+  }
+</style>
 
 <body>
   <div class="container-fluid bg-dark">
@@ -67,10 +72,10 @@
                 <span class="price text-muted fs-5 fw-semibold mb-4">
                     RM <?=$price?>
                 </span>
-                <form action="" method="post" class="row g-2 mt-4">
+                <form action="../../user/products/cart.php" method="post" class="row g-2 mt-4">
                   <div class="col-auto">
                     <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" max="<?=$quantity?>" required>
+                    <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" max="<?=$stock?>" required>
                   </div>
                   <div class="col-auto pt-4">
                     <input type="hidden" name="product_id" value="<?=$id?>">
