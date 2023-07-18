@@ -5,13 +5,14 @@
   if (isset($_POST['register'])) {
     $name = $_POST['userName'];
     $email = $_POST['userEmail'];
+    $phoneNo = $_POST['userPhone'];
     $password = $_POST['userPassword'];
     
     //hash password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     //insert the new user
-    $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashedPassword')";
+    $query = "INSERT INTO users (name, email, phone_number, password) VALUES ('$name', '$email', '$phoneNo', '$hashedPassword')";
     $result = mysqli_query($connection, $query);
 
     if ($result) {
@@ -72,6 +73,10 @@
                 <div class="mb-3">
                   <label for="email" class="form-label required-field">Email: </label>
                   <input type="email" class="form-control" id="email" name="userEmail" required>
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label required-field">Phone No: </label>
+                  <input type="text" class="form-control" id="phone" name="userPhone" required>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label required-field">Password: </label>

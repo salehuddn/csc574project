@@ -68,7 +68,23 @@
 
   // Send the user to the place order page if they click the "Place Order" button, and the cart should not be empty
   if (isset($_POST['placeorder']) && isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    require_once '../../user/queries/createOrders.php'; 
+    // Check if the user has provided address, city, state, and zip code
+    $userId = $_SESSION['userId'];
+    $stmt = $connection->prepare('SELECT address, city, state, zip_code FROM users WHERE id = ?');
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($address, $city, $state, $zip_code);
+    $stmt->fetch();
+
+    if (empty($address) || empty($city) || empty($state) || empty($zip_code)) {
+      // User has not provided address information
+      echo '<script>alert("Please provide your address information."); window.location.href = "../../user/profile.php";</script>';
+      exit();
+    } else {
+      // User has provided address information
+      require_once '../../user/queries/createOrders.php';
+    }
   }
 
   // Check the session variable for products in the cart
