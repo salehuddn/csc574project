@@ -47,13 +47,20 @@
     </div>
   </div>
 
+  <div class="row myb-2" style="background-image: url(images/featured-image.jpg); background-repeat: no-repeat; background-position: center; background-size: cover;">
+    <div class="d-flex flex-column justify-content-center align-items-center text-center text-white d-block mx-auto" style="height: 400px;">
+        <h2 class="mx-auto">Gadgets</h2>
+        <p class="mx-auto">Essential gadgets for everyday use</p>
+    </div>
+  </div>
+
   <div class="container-fluid">
     <div class="container my-4">
       <!-- Header -->
       <div class="row my-2">
-        <div class="d-flex justify-content-end mb-3">
+        <!-- <div class="d-flex justify-content-end mb-3">
           <?php @include('layouts/search.php'); ?>
-        </div>
+        </div> -->
         <div class="card border">
           <div class="container">
             <div class="row align-items-center">
