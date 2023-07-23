@@ -49,8 +49,8 @@
 
   <div class="row myb-2" style="background-image: url(images/featured-image.jpg); background-repeat: no-repeat; background-position: center; background-size: cover;">
     <div class="d-flex flex-column justify-content-center align-items-center text-center text-white d-block mx-auto" style="height: 400px;">
-        <h2 class="mx-auto">Gadgets</h2>
-        <p class="mx-auto">Essential gadgets for everyday use</p>
+        <h2 class="mx-auto">Graceful Glam</h2>
+        <p class="mx-auto">Discover Your Perfect Finds</p>
     </div>
   </div>
 
