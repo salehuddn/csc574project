@@ -36,6 +36,27 @@
   <title>GracefulGlam</title>
 
   <?php @include('layouts/header.php') ?>
+
+  <style>
+    html,
+    body {
+      overflow-x: hidden;
+    }
+
+    .zoom-container {
+      width: 300px; /* Set the container size to your desired image size */
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .zoom-container img {
+      transition: transform 0.3s ease;
+    }
+
+    .zoom-container:hover img {
+      transform: scale(1.1); /* Increase the scale to zoom in (1.1 means 10% zoom) */
+    }
+  </style>
 </head>
 
 <body>
@@ -47,8 +68,8 @@
     </div>
   </div>
 
-  <div class="row myb-2" style="background-image: url(images/featured-image.jpg); background-repeat: no-repeat; background-position: center; background-size: cover;">
-    <div class="d-flex flex-column justify-content-center align-items-center text-center text-white d-block mx-auto" style="height: 400px;">
+  <div class="row" style="background-image: url(images/featured-image.jpg); background-repeat: no-repeat; background-position: center; background-size: cover;">
+    <div class="d-flex flex-column justify-content-center align-items-center text-center text-white d-block mx-auto" style="height: 300px;">
         <h2 class="mx-auto">Graceful Glam</h2>
         <p class="mx-auto">Discover Your Perfect Finds</p>
     </div>
@@ -56,40 +77,41 @@
 
   <div class="container-fluid">
     <div class="container my-4">
-      <!-- Header -->
-      <!-- Hot Selling Items -->
+      <!-- Recently Added -->
       <div class="row">
-        <h3 class="my-4 text-center">Recently Added Products</h3>
-        <div class="col">
-          <div class="card">
-            <div class="row align-items-center">
-              <img src="images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 1</p>
+        <h4 class="mb-4 text-center">Recently Added Products</h4>
+        <?php
+        $query = "SELECT a.*, 
+                (SELECT image_path FROM product_images WHERE product_id = a.id LIMIT 1) AS image_path,
+                c.name AS 'category_name', 
+                d.name AS 'subcategory_name'
+              FROM products a
+              INNER JOIN categories c ON a.category_id = c.id
+              INNER JOIN subcategories d ON a.subcategory_id = d.id
+              ORDER BY a.created_at DESC LIMIT 4";
+        $result = mysqli_query($connection, $query);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+        $index = 1;
+        } else {
+        echo "No product found.";
+        }
+
+        while ($product = mysqli_fetch_assoc($result)): 
+        
+        ?>
+        <div class="col mt-2">
+            <div class="card border-0">
+              <a href="../../user/products/show.php?product_id=<?= $product['id'] ?>" class="text-decoration-none link-dark">
+                <div class="zoom-container">
+                  <img src="/admin<?= $product['image_path'] ?>" width="300" height="300" alt="<?= $product['name'] ?>" class="rounded">
+                </div>
+                <p class="fs-5 mt-4 mb-0"><?= $product['name'] ?></p>
+                <p class="fs-5 text-secondary">RM <?= $product['price'] ?></p>
+              </a>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="row align-items-center">
-              <img src="images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 2</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="row align-items-center">
-              <img src="images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 3</p>
-            </div>
-          </div>
-        </div>
+        <?php endwhile; ?>
       </div>
     </div>
   </div>

@@ -67,9 +67,9 @@ $role = $_SESSION['role'];
           }
 
           //cart icon visible for role user
-          if ($_SESSION['role'] === 'user') {
-            echo '<li class="nav-item"><a href="" class="nav-link fs-5"><ion-icon name="cart-outline"></ion-icon></a></li>';
-          }
+          // if ($_SESSION['role'] === 'user') {
+          //   echo '<li class="nav-item"><a href="" class="nav-link fs-5"><ion-icon name="cart-outline"></ion-icon></a></li>';
+          // }
         ?>
       </ul>
     </div>
