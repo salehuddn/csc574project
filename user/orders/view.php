@@ -1,12 +1,14 @@
 <?php 
   require_once '../../config/connection.php';
+  session_start();
 
-  $category = $_GET['category'];
-  $pageTitle = 'Products';
-  $subcategory = $_GET['subcategory'] ?? '';
+  if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn'] || $_SESSION['role'] !== 'user') {
+    header('Location: ../../login.php');
+    exit();
+  }
 
-  require_once '../../user/queries/getProducts.php';
-  require_once '../../user/queries/getSubCategories.php';
+  require('../../user/queries/getOrders.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +17,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GracefulGlam | <?= $pageTitle ?> </title>
+  <title>GracefulGlam | Orders</title>
 
   <?php @include('../../layouts/header.php') ?>
 </head>
@@ -31,71 +33,74 @@
     <div class="container my-4">
       <div class="row justify-content-center my-4">
         <div class="col-lg-12 col-md-6 col-sm-6">
-          <div class="card border-0">
-            <div class="card-header fw-bold text-center fs-4 bg-white"><?= $pageTitle ?></div>
+          <div class="card">
+            <div class="card-header fw-bold text-center">Orders</div>
             <div class="card-body">
-              <div class="d-flex justify-content-between mb-3">
-                <div class="">
-                  <?=$totalProducts?> Products
-                </div>
-                <div></div>
-                <div>
-                  <select class="form-select" aria-label="Default select example" onchange="redirectToPage(this)">
-                    <option selected disabled>Filter by Subcategory</option>
-                    <?php
-                    foreach ($subcategories as $subcategory):
-                    ?>
-                      <option value="<?=$subcategory['id']?>"><?=$subcategory['name']?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
+              <!-- Alert Message -->
+              <div class="alert-container"></div>
+
+              <!-- Search Bar -->
+              <div class="d-flex justify-content-end mb-3">
+                <form class="d-flex" action="#" method="GET">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit"><ion-icon name="search-outline"></ion-icon></button>
+                </form>
               </div>
-              <div class="container">
-                <div class="row row-cols-md-4 row-cols-1">
-                  <?php foreach ($products as $product): ?>
-                    <div class="col mb-4">
-                      <a href="../../user/products/show.php?product_id=<?=$product['id']?>" class="text-decoration-none">
-                        <?php if (!empty($product['image_path'])) : ?>
-                          <img src="../../../admin<?=$product['image_path']?>" width="250" height="250" alt="<?=$product['name']?>" class="rounded">
-                        <?php else : ?>
-                          <img src="../../images/no-image-2.png" width="250" height="250" alt="<?=$product['name']?>" class="rounded">
-                        <?php endif; ?>
-                        <p class="text-dark mb-0 mt-1"><?=$product['name']?></p>
-                      </a>
-                      <p class="text-muted">RM <?=$product['price']?></p>
-                    </div>
-                  <?php endforeach; ?>
-                </div>
+              <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                  <thead class="border">
+                    <tr class="table-light">
+                      <th scope="col" class="text-center" width="10%">Order ID</th>
+                      <th scope="col" class="text-center">Product Name</th>
+                      <th scope="col" class="text-center" width="10%">Quantity</th>
+                      <th scope="col" class="text-center" width="10%">Amount</th>
+                      <th scope="col" class="text-center" width="15%">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody class="border" style="vertical-align: middle;">
+                    <?php foreach ($orders as $order): 
+                        // print_r($order);
+                      ?>
+                      <tr class="border">
+                        <td class="text-center">
+                          <?php echo $order['id']; ?>
+                        </td>
+                        <td class="text-start">
+                          <div class="d-flex flex-wrap align-items-center">
+                            <?php if (!empty($order['image_path'])) : ?>
+                              <a href="../../admin<?php echo $order['image_path']; ?>" target="_blank">
+                                <img src="../../admin<?php echo $order['image_path']; ?>" class="rounded float-start me-2" alt="image" width="30" height="30">
+                              </a>
+                            <?php else : ?>
+                              <img src="../../images/no-image-2.png" class="rounded float-start me-2" alt="image" width="30" height="30">
+                            <?php endif; ?>
+
+                            <a href="../../user/products/show.php?product_id=<?= $order['product_id'] ?>" class="link-dark text-decoration-none">
+                              <?php echo $order['product_name'] ?? '' ?>
+                            </a>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <?php echo $order['quantity']; ?>
+                        </td>
+                        <td class="text-center">
+                          RM <?php echo $order['total_amount']; ?>
+                        </td>
+                        <td class="text-center">
+                          <?php echo date('d-m-Y h:i A', strtotime($order['order_date'])); ?> 
+                        </td>
+                      </tr>
+                      <?php endforeach; ?>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
-    <!-- Footer -->
-    <?php @include('../../layouts/footer.php') ?>
-    <!-- Scripts -->
+
     <?php @include('../../layouts/scripts.php') ?>
-    <script>
-        function redirectToPage(selectElement) {
-          // Get the selected value from the <select> element
-          var selectedValue = selectElement.value;
-          
-          // Check if the selected value is valid (not the default disabled option)
-          if (selectedValue !== "") {
-              // Get the 'category' parameter from the current URL using PHP
-              var categoryParam = "<?php echo $_GET['category']; ?>";
-              
-              // Replace "YOUR_PAGE_URL" with the actual URL where you want to redirect the user
-              var redirectURL = "../../user/products/view.php?category=" + categoryParam + "&subcategory=" + encodeURIComponent(selectedValue);
-              
-              // Redirect the user to the specified page
-              window.location.href = redirectURL;
-          }
-      }
-    </script>
 </body>
 
 </html>
