@@ -34,18 +34,30 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     // Get the order ID of the inserted order
     $order_id = $stmt->insert_id;
 
-    // Insert the order items into the database
+    // Insert the order items into the database and update product stock and sold
     foreach ($_SESSION['cart'] as $product_id => $quantity) {
-        // Retrieve the product price from the database
-        $stmt = $connection->prepare('SELECT price FROM products WHERE id = ?');
+        // Retrieve the product details from the database
+        $stmt = $connection->prepare('SELECT price, stock, sold FROM products WHERE id = ?');
         $stmt->bind_param('i', $product_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $product = $result->fetch_assoc();
 
+        // Calculate the item total
+        $item_total = $product['price'] * $quantity;
+        $subtotal += $item_total;
+
         // Insert the order item into the database
         $stmt = $connection->prepare('INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)');
         $stmt->bind_param('iiid', $order_id, $product_id, $quantity, $product['price']);
+        $stmt->execute();
+
+        // Update the product stock and sold
+        $new_stock = $product['stock'] - $quantity;
+        $new_sold = $product['sold'] + $quantity;
+
+        $stmt = $connection->prepare('UPDATE products SET stock = ?, sold = ? WHERE id = ?');
+        $stmt->bind_param('iii', $new_stock, $new_sold, $product_id);
         $stmt->execute();
     }
 
