@@ -57,26 +57,9 @@
   <div class="container-fluid">
     <div class="container my-4">
       <!-- Header -->
-      <div class="row my-2">
-        <!-- <div class="d-flex justify-content-end mb-3">
-          <?php @include('layouts/search.php'); ?>
-        </div> -->
-        <div class="card border">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-md-6 p-4 px-5">
-                <h2>Free delivery with purchase above RM100</h2>
-              </div>
-              <div class="col-md-6 p-4 text-center">
-                <img src="images/kasut2.jpg" alt="#" width="50%">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- Hot Selling Items -->
-      <div class="row my-4">
-        <h2>Hot Selling</h2>
+      <div class="row">
+        <h3 class="my-4 text-center">Recently Added Products</h3>
         <div class="col">
           <div class="card">
             <div class="row align-items-center">
