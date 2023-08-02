@@ -25,6 +25,26 @@
     //display the login message as alert
     echo '<script>window.alert("' . $loginMessage . '");</script>';
   }
+
+  $registeredUsersQuery = "SELECT COUNT(*) as userCount FROM users";
+  $registeredUsersResult = mysqli_query($connection, $registeredUsersQuery);
+  $registeredUsersData = mysqli_fetch_assoc($registeredUsersResult);
+  $registeredUsersCount = $registeredUsersData['userCount'];
+
+  // Fetch today's orders count and total sales
+  $today = date('Y-m-d');
+  $todayOrdersQuery = "SELECT COUNT(*) as orderCount, SUM(total_amount) as totalSales FROM orders WHERE DATE(order_date) = '$today'";
+  $todayOrdersResult = mysqli_query($connection, $todayOrdersQuery);
+  $todayOrdersData = mysqli_fetch_assoc($todayOrdersResult);
+  $todayOrdersCount = $todayOrdersData['orderCount'];
+  $todayTotalSales = $todayOrdersData['totalSales'];
+
+  // Fetch monthly total sales
+  $currentMonth = date('m');
+  $monthlySalesQuery = "SELECT SUM(total_amount) as totalSales FROM orders WHERE MONTH(order_date) = '$currentMonth'";
+  $monthlySalesResult = mysqli_query($connection, $monthlySalesQuery);
+  $monthlySalesData = mysqli_fetch_assoc($monthlySalesResult);
+  $monthlyTotalSales = $monthlySalesData['totalSales'];
 ?>
 
 <!DOCTYPE html>
@@ -49,54 +69,32 @@
 
   <div class="container-fluid">
     <div class="container my-4">
-      <!-- Header -->
-      <div class="row my-2">
-        <div class="d-flex justify-content-end mb-3">
-          <?php @include('../layouts/search.php'); ?>
-        </div>
-        <div class="card border">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-md-6 p-4 px-5">
-                <h2>Free delivery with purchase above RM100</h2>
-              </div>
-              <div class="col-md-6 p-4 text-center">
-                <img src="../images/kasut2.jpg" alt="#" width="50%">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Hot Selling Items -->
       <div class="row my-4">
-        <h2>Hot Selling</h2>
-        <div class="col">
+        <!-- Registered Users Count -->
+        <div class="col-md-4">
           <div class="card">
-            <div class="row align-items-center">
-              <img src="../images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 1</p>
+            <div class="card-body">
+              <h5 class="card-title">Registered Users</h5>
+              <p class="card-text"><?php echo $registeredUsersCount; ?></p>
             </div>
           </div>
         </div>
-        <div class="col">
+        <!-- Today's Orders and Sales -->
+        <div class="col-md-4">
           <div class="card">
-            <div class="row align-items-center">
-              <img src="../images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 2</p>
+            <div class="card-body">
+              <h5 class="card-title">Today's Orders</h5>
+              <p class="card-text"><?php echo $todayOrdersCount; ?> orders</p>
+              <p class="card-text">Total Sales: RM <?php echo number_format($todayTotalSales, 2); ?></p>
             </div>
           </div>
         </div>
-        <div class="col">
+        <!-- Monthly Sales -->
+        <div class="col-md-4">
           <div class="card">
-            <div class="row align-items-center">
-              <img src="../images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 3</p>
+            <div class="card-body">
+              <h5 class="card-title">Monthly Sales</h5>
+              <p class="card-text">Total Sales: RM <?php echo number_format($monthlyTotalSales, 2); ?></p>
             </div>
           </div>
         </div>
