@@ -95,12 +95,12 @@
               <div class="card-header fw-bold text-center">Purchase History</div>
               <div class="card-body">
                 <!-- Search Bar -->
-                <div class="d-flex justify-content-end mb-3">
+                <!-- <div class="d-flex justify-content-end mb-3">
                   <form class="d-flex" action="#" method="GET">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit"><ion-icon name="search-outline"></ion-icon></button>
                   </form>
-                </div>
+                </div> -->
 
                 <!-- Table -->
                 <div class="table-responsive">

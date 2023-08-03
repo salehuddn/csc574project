@@ -2,7 +2,7 @@
 
 require_once('../../config/connection.php');
 
-$id = $_GET['product_id'];
+$id = $_GET['user_id'];
 $query = "SELECT * FROM users WHERE id = $id";
 $result = mysqli_query($connection, $query);
 

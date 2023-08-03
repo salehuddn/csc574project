@@ -82,7 +82,7 @@
                           <?php echo date('d-m-Y h:i A', strtotime($joinedDate)); ?> 
                         </td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-sm btn-secondary"><a href="../users/show.php?product_id=<?php echo $id; ?>" class="text-decoration-none text-white"></ion-icon>View Details</a></button>
+                          <button type="button" class="btn btn-sm btn-secondary"><a href="../users/show.php?user_id=<?php echo $id; ?>" class="text-decoration-none text-white"></ion-icon>View Details</a></button>
                         </td>
                       </tr>
                         <?php
