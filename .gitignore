@@ -1,2 +1,2 @@
 config/connection.php
-admin/products/images/*
+# admin/products/images/*
