@@ -3,16 +3,22 @@ require_once('../../config/connection.php');
 
 if (isset($_POST['submit'])) {
   $productName = $_POST['productName'];
-  $productDesc = $_POST['productDesc'];
-  $productPrice = $_POST['productPrice'];
-  $productCategory = $_POST['productCategory'];
-  $productSubCategory = $_POST['productSubCategory'];
-  $productStock = $_POST['productStock'];
+    $productDesc = $_POST['productDesc'];
+    $productPrice = $_POST['productPrice'];
+    $productCategory = $_POST['productCategory'];
+    $productSubCategory = $_POST['productSubCategory'];
+    $productStock = $_POST['productStock'];
 
-  //insert product into products table
-  $insertProductQuery = "INSERT INTO products (name, description, price, category_id, subcategory_id, stock) 
-                         VALUES ('$productName', '$productDesc', $productPrice, $productCategory, $productSubCategory, $productStock)";
-  $insertProductResult = mysqli_query($connection, $insertProductQuery);
+    // Prepare the insert statement using placeholders
+    $insertProductQuery = "INSERT INTO products (name, description, price, category_id, subcategory_id, stock) 
+                           VALUES (?, ?, ?, ?, ?, ?)";
+
+    // Use prepared statement to safely bind the parameters
+    $stmt = mysqli_prepare($connection, $insertProductQuery);
+    mysqli_stmt_bind_param($stmt, "ssdiis", $productName, $productDesc, $productPrice, $productCategory, $productSubCategory, $productStock);
+
+    // Execute the prepared statement
+    $insertProductResult = mysqli_stmt_execute($stmt);
 
   if ($insertProductResult) {
       $productId = mysqli_insert_id($connection); //get product ID
