@@ -55,11 +55,23 @@
 
               <!-- Search Bar -->
               <div class="d-flex justify-content-end mb-3">
-                <form class="d-flex" action="#" method="GET">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" action="" method="GET">
+                  <input class="form-control me-2" type="search" name="search_query" placeholder="Search" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit"><ion-icon name="search-outline"></ion-icon></button>
+                  <?php if (!empty($_GET['search_query'])): ?>
+                    <a href="?reset=true" class="btn btn-outline-secondary ms-2">Reset</a>
+                  <?php endif; ?>
                 </form>
               </div>
+              <?php if (!empty($search_query)): ?>
+                <p class="text-center mt-3">
+                  Search results for: <strong><?= htmlspecialchars($search_query) ?></strong>
+                  <?php if (empty($result)): ?>
+                    (No results found)
+                  <?php endif; ?>
+                </p>
+              <?php endif; ?>
+
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <thead class="border">
