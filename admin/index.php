@@ -37,7 +37,7 @@
   $todayOrdersResult = mysqli_query($connection, $todayOrdersQuery);
   $todayOrdersData = mysqli_fetch_assoc($todayOrdersResult);
   $todayOrdersCount = $todayOrdersData['orderCount'];
-  $todayTotalSales = $todayOrdersData['totalSales'];
+  $todayTotalSales = $todayOrdersData['totalSales'] ?? 0;
 
   // Fetch monthly total sales
   $currentMonth = date('m');
