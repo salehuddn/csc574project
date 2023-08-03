@@ -47,54 +47,55 @@
 
   <div class="container-fluid">
     <div class="container my-4">
-      <!-- Header -->
-      <div class="row my-2">
-        <div class="d-flex justify-content-end mb-3">
-          <?php @include('../layouts/search.php'); ?>
-        </div>
-        <div class="card border">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-md-6 p-4 px-5">
-                <h2>Free delivery with purchase above RM100</h2>
-              </div>
-              <div class="col-md-6 p-4 text-center">
-                <img src="../images/kasut2.jpg" alt="#" width="50%">
-              </div>
-            </div>
-          </div>
+      <!-- User Dashboard -->
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Welcome, <?php echo $_SESSION['userName']; ?>!</h2>
+          <p>Here's an overview of your account:</p>
         </div>
       </div>
-      <!-- Hot Selling Items -->
+
       <div class="row my-4">
-        <h2>Hot Selling</h2>
-        <div class="col">
+        <!-- Order History -->
+        <div class="col-md-6">
           <div class="card">
-            <div class="row align-items-center">
-              <img src="../images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 1</p>
+            <div class="card-body">
+              <h5 class="card-title">Order History</h5>
+              <?php
+                $userId = $_SESSION['userId'];
+                $orderHistoryQuery = "SELECT * FROM orders WHERE user_id = $userId ORDER BY order_date DESC";
+                $orderHistoryResult = mysqli_query($connection, $orderHistoryQuery);
+
+                if (mysqli_num_rows($orderHistoryResult) > 0) {
+                  while ($row = mysqli_fetch_assoc($orderHistoryResult)) {
+                    echo '<p>Order ID: ' . $row['id'] . ' - Date: ' . $row['order_date'] . ' - Total Amount: RM ' . number_format($row['total_amount'], 2) . '</p>';
+                  }
+                } else {
+                  echo '<p>No orders found.</p>';
+                }
+              ?>
             </div>
           </div>
         </div>
-        <div class="col">
+        <!-- Account Information -->
+        <div class="col-md-6">
           <div class="card">
-            <div class="row align-items-center">
-              <img src="../images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 2</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="row align-items-center">
-              <img src="../images/kasut2.jpg" alt="#" width="60%">
-            </div>
-            <div class="px-4 py-2 text-center">
-              <p class="fw-bold">KASUT NIKE 3</p>
+            <div class="card-body">
+              <h5 class="card-title">Account Information</h5>
+              <?php
+                $userId = $_SESSION['userId'];
+                $accountInfoQuery = "SELECT * FROM users WHERE id = $userId";
+                $accountInfoResult = mysqli_query($connection, $accountInfoQuery);
+
+                if (mysqli_num_rows($accountInfoResult) > 0) {
+                  $userInfo = mysqli_fetch_assoc($accountInfoResult);
+                  echo '<p>Name: ' . $userInfo['name'] . '</p>';
+                  echo '<p>Email: ' . $userInfo['email'] . '</p>';
+                  echo '<p>Registered at: ' . $userInfo['created_at'] . '</p>';
+                } else {
+                  echo '<p>Account information not available.</p>';
+                }
+              ?>
             </div>
           </div>
         </div>

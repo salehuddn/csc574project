@@ -18,7 +18,7 @@
     $email = $_POST['userEmail'];
     $password = $_POST['userPassword'];
 
-    $query = "SELECT id, password, role FROM users WHERE email = '$email'";
+    $query = "SELECT id, name, password, role FROM users WHERE email = '$email'";
     $result = mysqli_query($connection, $query);
 
     if ($result && mysqli_num_rows($result) == 1) {
@@ -26,12 +26,14 @@
         $userId = $row['id'];
         $hashedPassword = $row['password'];
         $role = $row['role'];
+        $userName = $row['name'];
 
         //verify password
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['loggedIn'] = true;
             $_SESSION['userId'] = $userId; //store the user's ID in the session
             $_SESSION['role'] = $role;
+            $_SESSION['userName'] = $userName;
             $_SESSION['loginMessage'] = "Logged in successfully.";
 
             if ($_SESSION['role'] == 'admin') {
